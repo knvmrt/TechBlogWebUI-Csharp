@@ -32,9 +32,38 @@ namespace WebUI.Areas.Admin.Views.Dashboard
             return View();
         }
         [HttpPost]
-        public IActionResult Register(RegisterDTO registerDTO)
+        public async Task<IActionResult> Register(RegisterDTO registerDTO)
         {
-            return View();
+
+            var chackEmail = await _userManager.FindByEmailAsync(registerDTO.Email);
+            if (chackEmail is null) 
+            {
+                ModelState.AddModelError("Error", "Email is already existed!");
+                    return View();
+            }
+
+            User newUser = new()
+            {
+                Email = registerDTO.Email,
+                FirstName = registerDTO.Firstname,
+                LastName = registerDTO.Lastname,
+                UserName = registerDTO.Email
+            };
+
+            var resault = await _userManager.CreateAsync(newUser, registerDTO.Password);
+
+            if (resault.Succeeded) 
+            {
+            return RedirectToAction(nameof(Login));
+            }
+            else{
+                foreach (var error in resault.Errors) 
+                {
+                    ModelState.AddModelError("Error", error.Description);
+                }
+                return View();
+            }
+
         }
     }
 }
