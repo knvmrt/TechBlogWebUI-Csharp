@@ -1,0 +1,48 @@
+﻿@model List<User>
+@inject Microsoft.AspNetCore.Identity.UserManager<User> _userManager
+@{
+    int counter = 0;
+}
+
+<table class="table table-striped table-bordered table-hover">
+
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Rol name</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            counter++;
+            <tr>
+                <td>@counter</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Email</td>
+                <td>
+
+                    @{
+                        var roles = await _userManager.GetRolesAsync(item);
+                        foreach (var role in roles)
+                        {
+                            <span>@role ;</span>
+                        }
+                    }
+
+                </td>
+                <td>
+
+                    <a asp-area="Admin" asp-controller="User" asp-action="EditRole" asp-route-userId="@item.Id" class="btn btn-warning">Edit User</a>
+                    <a asp-area="Admin" asp-controller="User" asp-action="AddRole" asp-route-userId="@item.Id" class="btn btn-success">Add Role</a>
+
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+
+</table>

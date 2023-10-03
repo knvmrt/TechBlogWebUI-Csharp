@@ -1,0 +1,37 @@
+﻿@model User
+@inject Microsoft.AspNetCore.Identity.UserManager<User> _userManager
+
+
+<dl>
+
+    <dt>Firstname & Lastname</dt>
+    <dd>@Model.FirstName @Model.LastName</dd>
+    <dt>Email</dt>
+    <dd>@Model.Email</dd>
+
+
+</dl>
+
+<table>
+
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach(var item in await _userManager.GetRolesAsync(Model))
+        {
+            <tr>
+                <td>@item</td>
+                <td><a asp-area="Admin" asp-controller="User" asp-action="Delete">Delete Role</a></td>
+            </tr> 
+        }
+
+    </tbody>
+</table>
+
+
