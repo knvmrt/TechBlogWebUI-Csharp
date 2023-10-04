@@ -12,7 +12,7 @@
 
 </dl>
 
-<table>
+<table class="table table-dark">
 
     <thead>
         <tr>
@@ -27,7 +27,7 @@
         {
             <tr>
                 <td>@item</td>
-                <td><a asp-area="Admin" asp-controller="User" asp-action="Delete">Delete Role</a></td>
+                <td><a asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userId="@Model.Id" asp-route-role="@item" class="btn btn-danger">Delete Role</a></td>
             </tr> 
         }
 

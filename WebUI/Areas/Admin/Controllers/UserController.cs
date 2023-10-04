@@ -71,20 +71,24 @@ namespace WebUI.Areas.Admin.Controllers
             if (checkUser == null) return NotFound();
             return View(checkUser);
         }
-/*        [HttpPost]
-        public async Task<IActionResult> EditRole(string userId, string role)
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string userId, string role)
         {
-        if(userId == null || role == null) return NotFound();
+            if (userId == null || role == null) return NotFound();
             var checkUser = await _userManager.FindByIdAsync(userId);
 
             if (checkUser == null) return NotFound();
-            IdentityResult result = await _userManager.RemoveFromRolesAsync(checkUser, role);
-            if (!result.Succeeded) 
+
+            IdentityResult result = await _userManager.RemoveFromRoleAsync(checkUser, role);
+
+            if (!result.Succeeded)
             {
                 ViewData["Error"] = "Something went wrong!";
                 return View();
             }
             return RedirectToAction("Index");
-        }*/
+        }
+
     }
 }
